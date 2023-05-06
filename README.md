@@ -65,3 +65,17 @@ uptime = BTCRPC.uptime(server: "btc1")
 
 uptime = BTCRPC.uptime(server: "btc2")
 ```
+
+## Road map
+
+[x] getblockcount
+[x] getblock
+[] sendrawtransaction
+[] getrawtransaction (with verbose & blockhash)
+[] getmempool(stats)
+[] adddescriptortowallet
+[] addmultisigaddress
+[] estimatesmartfee
+[] gettxout
+[] importaddress
+[] importprivkey

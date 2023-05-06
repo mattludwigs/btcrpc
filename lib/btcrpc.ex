@@ -3,7 +3,7 @@ defmodule BTCRPC do
   RPC client for bitcoin core
   """
 
-  alias BTCRPC.{Client, Config, Requests}
+  alias BTCRPC.{BlockInfo, Client, Config, Requests}
 
   @typedoc """
   Configuration args for single BTC RPC server
@@ -96,5 +96,32 @@ defmodule BTCRPC do
     opts
     |> Requests.get_blockcount()
     |> Client.rpc_request(opts)
+  end
+
+  @doc """
+  Get the hash for the block
+  """
+  @spec get_block_hash(pos_integer(), [rpc_opt()]) :: {:ok, String.t()}
+  def get_block_hash(height, opts \\ []) do
+    opts
+    |> then(&Requests.get_block_hash(height, &1))
+    |> Client.rpc_request()
+  end
+
+  @typedoc """
+  Options for the `getblock` RPC call
+
+  * `:verbosity` - integer either 0, 1, 2
+  """
+  @type get_block_opts() :: rpc_opt() | {:verbosity, integer()}
+
+  @doc """
+  Get block information from the block hash
+  """
+  @spec get_block(String.t(), [get_block_opts()]) :: {:ok, BlockInfo.t() | String.t()}
+  def get_block(blockhash, opts \\ []) do
+    opts
+    |> then(&Requests.get_block(blockhash, &1))
+    |> Client.rpc_request()
   end
 end
